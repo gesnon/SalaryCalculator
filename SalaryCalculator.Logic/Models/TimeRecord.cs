@@ -13,6 +13,5 @@ namespace SalaryCalculator.Logic.Models
         public DateTime WorkingDate { get; set; }
         public string Comment { get; set; }
 
-
     }
 }

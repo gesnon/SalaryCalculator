@@ -4,7 +4,7 @@ using System.Text;
 
 namespace SalaryCalculator.Logic.Models
 {
-    class Freelancer : BaseEmployee
+    public class Freelancer : BaseEmployee
     {
         public Freelancer(string firstName, string lastName) : base(firstName, lastName)
         {
