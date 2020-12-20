@@ -14,9 +14,9 @@ namespace SalaryCalculator.Logic.Models
             this.Type = "Employee";
         }
 
-        public override void AddWorkTime(Journal timeJournal, BaseEmployee baseEmployee, float workTime, DateTime workingDate, string comment)
+        public override void AddWorkTime( BaseEmployee baseEmployee, float workTime, DateTime workingDate, string comment)
         {
-            base.AddWorkTime(timeJournal, this, workTime, workingDate, comment);
+            base.AddWorkTime(this, workTime, workingDate, comment);
         }
 
         public override List<TimeRecord> GetPersonalTimeRecords(BaseEmployee baseEmployee, DateTime firstDate, DateTime lastDate, Journal timeJournal)

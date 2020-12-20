@@ -19,17 +19,11 @@ namespace SalaryCalculator.Logic.Models
             this.LastName = lastName;
         }
 
-        public virtual void AddWorkTime(Journal timeJournal, BaseEmployee baseEmployee, float workTime, DateTime workingDate, string comment)
+        public virtual void AddWorkTime(BaseEmployee baseEmployee, float workTime, DateTime workingDate, string comment)
         {
-            timeJournal.TimeJournal.Add(new TimeRecord
-            {
-                FirstName = baseEmployee.FirstName,
-                LastName = baseEmployee.LastName,
-                Time = workTime,
-                WorkingDate = workingDate,
-                DateOfRecord = DateTime.Today,
-                Comment = comment
-            });
+            Journal timeJournal = new Journal();
+
+            timeJournal.AddWorkTime(baseEmployee, workTime, workingDate, comment); 
         }
 
         public virtual List<TimeRecord> GetPersonalTimeRecords(BaseEmployee baseEmployee, DateTime firstDate, DateTime lastDate, Journal timeJournal)

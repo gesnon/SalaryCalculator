@@ -38,9 +38,12 @@ namespace SalaryCalculator.Logic.Models
             saveToFile.Save(Settings1.Default.PathToAllEmployees,employee);
         }
 
-        public List<TimeRecord> GetTimeRecords(DateTime firstDate, DateTime lastDate, Journal timeJournal)
+        public List<TimeRecord> GetTimeRecords(DateTime firstDate, DateTime lastDate)
         {
-            List<TimeRecord> Journal = timeJournal.TimeJournal.Where(q => q.WorkingDate >= firstDate && q.WorkingDate <= lastDate).OrderBy(q => q.WorkingDate).ToList();
+            Journal journal = new Journal();
+
+            List<TimeRecord> Journal = journal.GetAllrecordsBetweenDate(firstDate,lastDate);
+
             return Journal;
         }
 

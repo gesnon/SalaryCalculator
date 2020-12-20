@@ -1,6 +1,8 @@
-﻿using SalaryCalculator.Logic.SaveFile;
+﻿using SalaryCalculator.Logic.ReadFile;
+using SalaryCalculator.Logic.SaveFile;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace SalaryCalculator.Logic.Models
@@ -8,6 +10,21 @@ namespace SalaryCalculator.Logic.Models
     public class Journal
     {
         public List<TimeRecord> TimeJournal { get; set; }
+
+        public List<TimeRecord> GetAllrecordsBetweenDate(DateTime firstDate,DateTime SecondDate)
+        {
+            List<TimeRecord> timeRecords = new List<TimeRecord>();
+
+            ReadingFile readFile = new ReadingFile();
+
+            timeRecords.AddRange(readFile.ReadFromFile<TimeRecord>(Settings1.Default.PathToEmployeeJournal));
+            timeRecords.AddRange(readFile.ReadFromFile<TimeRecord>(Settings1.Default.PathToFreelancerJournal));
+            timeRecords.AddRange(readFile.ReadFromFile<TimeRecord>(Settings1.Default.PathToHeadJournal));
+
+            timeRecords=timeRecords.Where(q => q.WorkingDate >= firstDate && q.WorkingDate <= SecondDate).OrderBy(q => q.WorkingDate).ToList();
+
+            return timeRecords;
+        }
 
         private string GetPath (BaseEmployee baseEmployee)
         {

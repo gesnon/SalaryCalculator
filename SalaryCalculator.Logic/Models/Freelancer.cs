@@ -12,7 +12,7 @@ namespace SalaryCalculator.Logic.Models
             this.Type = "Freelancer";
         }
 
-        public override void AddWorkTime(Journal timeJournal, BaseEmployee baseEmployee, float workTime, DateTime workingDate, string comment)
+        public override void AddWorkTime(BaseEmployee baseEmployee, float workTime, DateTime workingDate, string comment)
         {
             var checkDate = (DateTime.Today - workingDate).Days;
 
@@ -22,7 +22,7 @@ namespace SalaryCalculator.Logic.Models
 
             }
 
-            base.AddWorkTime(timeJournal, this, workTime, workingDate, comment);
+            base.AddWorkTime( this, workTime, workingDate, comment);
 
             return;
         }
