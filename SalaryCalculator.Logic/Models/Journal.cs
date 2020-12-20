@@ -40,9 +40,9 @@ namespace SalaryCalculator.Logic.Models
                 Comment = comment
             };
 
-            SaveTimeRecord savetime = new SaveTimeRecord();
+            SaveToFile saveTime = new SaveFile.SaveToFile();
 
-            savetime.Save(GetPath(baseEmployee), timeRecord);
+            saveTime.Save(GetPath(baseEmployee), timeRecord);
         }
     }
 }

@@ -8,16 +8,17 @@ using System.Text;
 
 namespace SalaryCalculator.Logic.SaveFile
 {
-    public class SaveTimeRecord
+    public class SaveToFile
     {
-        public void Save(string PathToFile, TimeRecord timeRecord)
+        public void Save<T>(string PathToFile, T Record)
         {
             using (var writer = new StreamWriter(PathToFile, true, Encoding.Unicode))
             using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
             {
                 csv.Configuration.RegisterClassMap<MyConfigForHeadJournal>();
+                csv.Configuration.RegisterClassMap<MyConfiguration>();
 
-                csv.WriteRecord(timeRecord);
+                csv.WriteRecord(Record);
             }
         }
     }
