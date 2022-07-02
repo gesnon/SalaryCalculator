@@ -11,6 +11,11 @@ namespace SalaryCalculatorServices.Services.ChiefService
 {
     public class ChiefService : IChiefService
     {
+        public ChiefService()
+        {
+
+        }
+
         private readonly DataService.IDataService<Person> personService;
         private readonly DataService.IDataService<Record> recordService;
         public ChiefService(IDataService<Person> personService, IDataService<Record> recordService)
@@ -18,9 +23,9 @@ namespace SalaryCalculatorServices.Services.ChiefService
             this.personService = personService;
             this.recordService = recordService;
         }
-        public void CreatePerson()
+        public void CreatePerson(Person person)
         {
-            personService.Add(new Person { });
+            personService.Add(person);
         }
 
         public void CreateRecord()

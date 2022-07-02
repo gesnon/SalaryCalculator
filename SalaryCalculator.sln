@@ -3,11 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32210.238
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SalaryCalculator", "SalaryCalculator\SalaryCalculator.csproj", "{F51C9A19-D4EA-4A35-B83A-125040B752FB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SalaryCalculator", "SalaryCalculator\SalaryCalculator.csproj", "{F51C9A19-D4EA-4A35-B83A-125040B752FB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SalaryCalculatorDB", "SalaryCalculatorDB\SalaryCalculatorDB.csproj", "{B9334926-D611-4873-BD35-8362977D9179}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SalaryCalculatorDB", "SalaryCalculatorDB\SalaryCalculatorDB.csproj", "{B9334926-D611-4873-BD35-8362977D9179}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SalaryCalculatorServices", "SalaryCalculatorServices\SalaryCalculatorServices.csproj", "{923BA5A0-7ACB-403F-8F60-841891861152}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SalaryCalculatorServices", "SalaryCalculatorServices\SalaryCalculatorServices.csproj", "{923BA5A0-7ACB-403F-8F60-841891861152}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViewService", "WievService\ViewService.csproj", "{03A30D3E-DFD9-4A52-87DF-A5803378240C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{923BA5A0-7ACB-403F-8F60-841891861152}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{923BA5A0-7ACB-403F-8F60-841891861152}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{923BA5A0-7ACB-403F-8F60-841891861152}.Release|Any CPU.Build.0 = Release|Any CPU
+		{03A30D3E-DFD9-4A52-87DF-A5803378240C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03A30D3E-DFD9-4A52-87DF-A5803378240C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03A30D3E-DFD9-4A52-87DF-A5803378240C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03A30D3E-DFD9-4A52-87DF-A5803378240C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

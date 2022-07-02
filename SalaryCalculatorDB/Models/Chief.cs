@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SalaryCalculator.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,6 +12,7 @@ namespace SalaryCalculatorDB.Models
         public Chief(string FullName)
         {
             this.FullName = FullName;
+            Type = "Chief";
             Salary = 200000;
             Bonus = 20000;
         }

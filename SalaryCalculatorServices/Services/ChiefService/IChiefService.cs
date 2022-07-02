@@ -10,7 +10,7 @@ namespace SalaryCalculatorServices.Services.ChiefService
 {
     public interface IChiefService
     {
-        public void CreatePerson();
+        public void CreatePerson(Person person);
         public void CreateRecord();
         public List<Record> GetAllPersonsRecords();
         public List<Record> GetPersonRecords(Person person);
