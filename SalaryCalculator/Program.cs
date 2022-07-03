@@ -1,2 +1,3 @@
 ﻿
-Console.WriteLine("Hello, World!");
+ViewService.View.Logic logic = new ViewService.View.Logic(); 
+logic.Start();

@@ -12,8 +12,8 @@ namespace SalaryCalculatorDB.Models
         public Employee(string FullName)
         {
             this.FullName = FullName;
-            Salary = 120000;           
-
+            Salary = 120000;
+            Type = "Employee";
         }
     }
 }

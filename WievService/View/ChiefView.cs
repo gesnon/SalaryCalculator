@@ -1,6 +1,7 @@
 ﻿using SalaryCalculator.Models;
 using SalaryCalculatorDB.Models;
 using SalaryCalculatorServices.Services.ChiefService;
+using SalaryCalculatorServices.Services.SystemService;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,16 @@ namespace ViewService.View
     public class ChiefView : PersonView
     {
         ChiefService chiefService = new ChiefService();
+        SystemService systemService = new SystemService();
+
+        public void ChiefFunctions()
+        {
+            Console.WriteLine("1. Добавить сотрудника");
+            Console.WriteLine("2. Просмотреть отчет по всем сотрудникам");
+            Console.WriteLine("3.Просмотреть отчет по конкретному сотруднику");
+            Console.WriteLine("4. Добавить часы работы");
+            Console.WriteLine("5. Выход из программы");
+        }
         public void AddPerson()
         {
             Person person = new Person();
@@ -29,7 +40,7 @@ namespace ViewService.View
                     continue;
                 }
 
-                if (FullName.All(Char.IsLetter)==false)
+                if (systemService.CheckNameValid(FullName) == false)
                 {
                     Console.WriteLine("В имени должны быть только буквы !");
                     continue;
@@ -43,32 +54,84 @@ namespace ViewService.View
             {
                 int type = int.Parse(Console.ReadLine());
 
-                if (type == 1 || type == 2 || type == 3)
+                switch (type)
                 {
-                    Console.WriteLine("Введите число от 1 до 3 ");
+                    case 1:
 
-                    switch (type)
-                    {
-                        case 1:
+                        //chiefService.CreatePerson((Chief)person);                            
+                        Console.WriteLine("Добавлен!");
+                        break;
+                    case 2:
+                        //chiefService.CreatePerson((Employee)person);                            
+                        Console.WriteLine("Добавлен!");
+                        break;
+                    case 3:
+                        //chiefService.CreatePerson((Freelancer)person);                            
+                        Console.WriteLine("Добавлен!");
+                        break;
 
-                            chiefService.CreatePerson((Chief)person);
-                            break;
-                        case 2:
-                            chiefService.CreatePerson((Employee)person);
-                            break;
-                        case 3:
-                            chiefService.CreatePerson((Freelancer)person);
-                            break;
-
-                        default:
-                            Console.WriteLine("Введите число от 1 до 3 ");
-                            continue;
-                    }
-
+                    default:
+                        Console.WriteLine("Дефолт Введите число от 1 до 3 ");
+                        continue;
                 }
+                break;
 
             }
 
+        }
+
+        public void GetAllPersonsView()
+        {
+            List<Person> persons = chiefService.GetAllPerson();
+            foreach (Person person in persons)
+            {
+                Console.WriteLine(person.FullName + ", " + person.Type);
+            }
+
+        }
+
+        public void GetAllPersonsRecords()
+        {
+            Console.WriteLine("Введите налало и конец периода в формате dd.mm.yyyy:");
+            Console.WriteLine("Начало периода: ");
+            DateTime firstDate = systemService.CheckDateValid();
+            Console.WriteLine("Окончание периода: ");
+            DateTime secondDate = systemService.CheckDateValid();
+            List<Record> records = chiefService.GetAllPersonsRecords(firstDate, secondDate);
+            foreach (Record record in records)
+            {
+                Console.WriteLine(record.Date + ", " + record.Owner + ", " + record.Time + ", " + record.Description);
+            }
+        }
+        public void GetPersonRecords()
+        {
+            Console.WriteLine("Введите имя работника:");
+            Person person = chiefService.GetPersonByName();
+            Console.WriteLine("Введите налало и конец периода в формате dd.mm.yyyy:");
+            Console.WriteLine("Начало периода: ");
+            DateTime firstDate = systemService.CheckDateValid();
+            Console.WriteLine("Окончание периода: ");
+
+                
+            DateTime secondDate = systemService.CheckDateValid();
+            List<Record> records = chiefService.GetAllPersonsRecords(firstDate, secondDate);
+            foreach (Record record in records)
+            {
+                Console.WriteLine(record.Date + ", " + record.Owner + ", " + record.Time + ", " + record.Description);
+            }
+        }
+
+        public void AddTime()
+        {
+            Console.WriteLine("Введите имя работника:");
+            Person person = chiefService.GetPersonByName();
+            Console.WriteLine("Введите дату: ");
+            DateTime date = systemService.CheckDateValid();
+            Console.WriteLine("Введите время: ");
+            float time = systemService.CheckTimeValid();
+            Console.WriteLine("Введите описание: ");
+            string description = Console.ReadLine();
+            chiefService.CreateRecord(person, date, time, description);
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using SalaryCalculator.Models;
 using SalaryCalculatorDB.Models;
 using SalaryCalculatorServices.Services.DataService;
+using SalaryCalculatorServices.Services.SystemService;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,53 +14,84 @@ namespace SalaryCalculatorServices.Services.ChiefService
     {
         public ChiefService()
         {
-
         }
-
+        FillData dataBase = new FillData();
         private readonly DataService.IDataService<Person> personService;
         private readonly DataService.IDataService<Record> recordService;
+
         public ChiefService(IDataService<Person> personService, IDataService<Record> recordService)
         {
             this.personService = personService;
             this.recordService = recordService;
+
         }
         public void CreatePerson(Person person)
         {
             personService.Add(person);
         }
 
-        public void CreateRecord()
+        public void CreateRecord(Person person, DateTime date, float time, string description)
         {
-            Record record = new Record() { Date = DateTime.Now, Time = 8.0f, Description = "New Description" };
+            
+            Record record = new Record() { Date = date, Time = time, Description = description, Owner=person };
             recordService.Add(record);
         }
 
-        public List<Record> GetAllPersonsRecords()
+        public List<Record> GetAllPersonsRecords(DateTime firstDate, DateTime secondDate)
         {
             List<Record> records = new List<Record>();
 
-            return records;
+            if (secondDate > DateTime.Now)
+            {
+                secondDate = DateTime.Now;
+            }
+            if (firstDate > DateTime.Now || firstDate > secondDate)
+            {
+                throw new Exception("Выбрано некорректное начало периода");
+            }
+
+            return records.Where(_ => _.Date > firstDate && _.Date < secondDate).OrderBy(_ => _.Date).ToList();
         }
 
         public List<Person> GetAllPerson()
         {
-            return new List<Person>();
+            return dataBase.FillPersons();
         }
 
-        public Person GetPersonById(int ID)
+        public Person GetPersonByName()
         {
-            Person person = personService.Get().FirstOrDefault(_=>_.ID==ID);
-            if (person == null)
+            
+            while (true)
             {
-                throw new Exception("Не найден");
-            }
-            return person;
+                string name = Console.ReadLine();
+                if (name.All(Char.IsLetter) == false)
+                {
+                    Console.WriteLine("Имя должно состоять только из букв");
+                    continue;
+                }
+                Person person = dataBase.FillPersons().FirstOrDefault(_ => _.FullName == name);
+                if (person == null)
+                {
+                    Console.WriteLine("Сотрудник не найден!");
+                    continue;
+                }
+                return person;
+            }           
         }
-        public List<Record> GetPersonRecords(Person person)
+        public List<Record> GetPersonRecords(Person person, DateTime firstDate, DateTime secondDate)
         {
             List<Record> records = new List<Record>();
 
-            return records;
+            if (secondDate > DateTime.Now)
+            {
+                secondDate = DateTime.Now;
+            }
+            if (firstDate > DateTime.Now || firstDate > secondDate)
+            {
+                throw new Exception("Выбрано некорректное начало периода");
+            }
+
+            return records.Where(_ => _.Date > firstDate && _.Date < secondDate).OrderBy(_ => _.Date).ToList();
         }
     }
 }

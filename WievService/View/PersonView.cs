@@ -7,8 +7,17 @@ using System.Threading.Tasks;
 
 namespace ViewService.View
 {
-        public abstract class PersonView
+    public class PersonView
     {
+        public PersonView()
+        {
+
+        }          
+        public void GetLogInScreen()
+        {
+            Console.WriteLine("Введите ваше имя");
+
+        }
         public void GetGreetingsScreen(Person person)
         {
             Console.WriteLine("Здравствуйте, " + person.FullName);

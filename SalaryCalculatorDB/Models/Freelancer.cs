@@ -15,7 +15,7 @@ namespace SalaryCalculatorDB.Models
         {
             this.FullName = FullName;
             HourSalary = 1000;
-
+            Type = "Freelancer";
         }
     }
 }
