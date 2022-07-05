@@ -25,6 +25,7 @@ namespace ViewService.View
         }
         public void AddPerson()
         {
+            
             Person person = new Person();
 
             Console.WriteLine("Добавление нового сотрудника ");
@@ -45,7 +46,7 @@ namespace ViewService.View
                     Console.WriteLine("В имени должны быть только буквы !");
                     continue;
                 }
-                person.FullName = FullName;
+                person.FullName = FullName;                
                 break;
             }
 
@@ -57,16 +58,16 @@ namespace ViewService.View
                 switch (type)
                 {
                     case 1:
-
-                        //chiefService.CreatePerson((Chief)person);                            
+                                                
+                        chiefService.AddPerson(new Chief(person.FullName));
                         Console.WriteLine("Добавлен!");
                         break;
                     case 2:
-                        //chiefService.CreatePerson((Employee)person);                            
+                        chiefService.AddPerson(new Employee(person.FullName));
                         Console.WriteLine("Добавлен!");
                         break;
                     case 3:
-                        //chiefService.CreatePerson((Freelancer)person);                            
+                        chiefService.AddPerson(new Freelancer(person.FullName));
                         Console.WriteLine("Добавлен!");
                         break;
 

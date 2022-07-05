@@ -11,39 +11,40 @@ namespace SalaryCalculatorServices.Services.SystemService
 {
     public class SystemService : ISystemService
     {
+        ChiefService.ChiefService chiefService = new ChiefService.ChiefService();
         public Person LogIn()
-        {FillData data = new FillData();
+        {
+            
             string name;
-            List<Person> FileWithPersons = data.FillPersons();
+            Person person;
+            List<Person> FileWithPersons = chiefService.GetAllPerson();
 
             while (true)
             {
                 string checkName = Console.ReadLine();
-                if (CheckNameValid(checkName) == true)
-                {
-                    name = checkName;
-                    break;
-                }
-                else
+                if (CheckNameValid(checkName) == false)
                 {
                     Console.WriteLine("Некорректное имя");
+                    continue;                    
+                }
+                person = FileWithPersons.FirstOrDefault(_ => _.FullName == checkName);
+                if (person== null)
+                {
+                    Console.WriteLine("Такого пользователя не существует ");
                     continue;
                 }
+                break;
             }
+                      
 
-            Person? person = FileWithPersons.FirstOrDefault(_ => _.FullName == name);
-            if (person == null)
-            {                
-                throw new Exception("Такого пользователя не существует");
-            }
             switch (person.Type)
             {
                 case "Chief":
-                    return (Chief)person;
+                    return new Chief(person.FullName);
                 case "Employee":
-                    return (Employee)person;
+                    return new Employee(person.FullName);
                 case "Freelancer":
-                    return (Freelancer)person;
+                    return new Freelancer(person.FullName);
                     default: throw new Exception("Какое-то исключение");
             }
         }

@@ -9,8 +9,7 @@ namespace SalaryCalculator.Models
 {
     public class Person
     {
-        public string FullName { get; set; }
-        public int ID { get; set; }
+        public string FullName { get; set; }        
         public string Type { get; set; }
         public decimal Salary { get; set; }
         public decimal Bonus { get; set; }

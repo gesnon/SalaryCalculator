@@ -1,6 +1,7 @@
 ﻿using SalaryCalculator.Models;
 using SalaryCalculatorDB.Models;
 using SalaryCalculatorServices.Services.DataService;
+using SalaryCalculatorServices.Services.Mapers;
 using SalaryCalculatorServices.Services.SystemService;
 using System;
 using System.Collections.Generic;
@@ -14,8 +15,10 @@ namespace SalaryCalculatorServices.Services.ChiefService
     {
         public ChiefService()
         {
+            this.personService = new CSVService<Person, PersonMaper>();
+            this.recordService = new CSVService<Record, RecordMaper>(); ;
         }
-        FillData dataBase = new FillData();
+        //FillData dataBase = new FillData();
         private readonly DataService.IDataService<Person> personService;
         private readonly DataService.IDataService<Record> recordService;
 
@@ -25,16 +28,17 @@ namespace SalaryCalculatorServices.Services.ChiefService
             this.recordService = recordService;
 
         }
-        public void CreatePerson(Person person)
-        {
-            personService.Add(person);
+        public void AddPerson(Person person )
+        {   List<Person> persons = new List<Person>();
+            persons.Add(person);
+            personService.AddToFile(@"C:\AllPersonal.csv", persons );
         }
 
         public void CreateRecord(Person person, DateTime date, float time, string description)
         {
             
             Record record = new Record() { Date = date, Time = time, Description = description, Owner=person };
-            recordService.Add(record);
+            //recordService.Add(record);
         }
 
         public List<Record> GetAllPersonsRecords(DateTime firstDate, DateTime secondDate)
@@ -55,7 +59,7 @@ namespace SalaryCalculatorServices.Services.ChiefService
 
         public List<Person> GetAllPerson()
         {
-            return dataBase.FillPersons();
+            return personService.ReadFromFile(@"C:\AllPersonal.csv");
         }
 
         public Person GetPersonByName()
@@ -69,7 +73,7 @@ namespace SalaryCalculatorServices.Services.ChiefService
                     Console.WriteLine("Имя должно состоять только из букв");
                     continue;
                 }
-                Person person = dataBase.FillPersons().FirstOrDefault(_ => _.FullName == name);
+                Person person = new Person(); /*dataBase.FillPersons().FirstOrDefault(_ => _.FullName == name);*/
                 if (person == null)
                 {
                     Console.WriteLine("Сотрудник не найден!");

@@ -8,10 +8,10 @@ namespace SalaryCalculatorServices.Services.DataService
 {
     public interface IDataService<T>
     {
-        public List<T> Get();
-        public void Add(T data);
-        public void Delete(T data);
-        public void Update(T data);
+        public List<T> ReadFromFile(string path);
+
+        public void AddToFile(string path, List<T> records);
+        public void WriteToFile(string path, List<T> list);
 
     }
 }

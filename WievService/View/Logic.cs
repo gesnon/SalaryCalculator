@@ -18,24 +18,22 @@ namespace ViewService.View
         {
             PersonView personView = new PersonView();
             SystemService systemService = new SystemService();
-            
+            ChiefView chiefView = new ChiefView();            
             personView.GetLogInScreen();
-            
             Person CurrentUser = systemService.LogIn();
             personView.GetGreetingsScreen(CurrentUser);
             switch (CurrentUser.Type)
             {
-                case "Chief":
-                ChiefView chiefView = new ChiefView();
+                case "Chief":                 
                     
                     while (true)
                     {
                         chiefView.ChiefFunctions();
                         int function = Convert.ToInt32(Console.ReadLine());
-                        if (function == 5) 
+                        if (function == 5)
                         {
                             break;
-                        } 
+                        }
                         switch (function)
                         {
                             case 1:
@@ -44,7 +42,7 @@ namespace ViewService.View
                             case 2:
 
                                 chiefView.GetAllPersonsRecords();
-                                break; 
+                                break;
                             case 3:
                                 chiefView.GetPersonRecords();
                                 break;
@@ -57,7 +55,7 @@ namespace ViewService.View
                                 break;
                         }
                     }
-                    
+
 
 
                     break;

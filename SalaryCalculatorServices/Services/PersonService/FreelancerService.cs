@@ -20,7 +20,7 @@ namespace SalaryCalculatorServices.Services.PersonService
 
         public void CreateRecord(float Time, string Description, DateTime Date, Person Owner, Person Creator)
         {
-            if (Owner.ID != Creator.ID)
+            if (Owner.FullName != Creator.FullName)
             {
                 throw new Exception("Время можно добавлять только себе");
             }
@@ -30,12 +30,12 @@ namespace SalaryCalculatorServices.Services.PersonService
             }
 
             Record record = new Record() { Date = DateTime.Now, Time = 8.0f, Description = "New Description", Creator = Creator, Owner = Owner };
-            recordService.Add(record);
+            //recordService.Add(record);
         }
 
         public List<Record> GetPersonRecords(Person person, Person getter)
         {
-            if (getter.ID != person.ID)
+            if (getter.FullName != person.FullName)
             {
                 throw new Exception("Время можно просматривать только у себя");
             }
