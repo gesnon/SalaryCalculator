@@ -11,11 +11,11 @@ namespace SalaryCalculatorServices.Services.ChiefService
     public interface IChiefService
     {
         public void AddPerson(Person person);
-        public void CreateRecord(Person person, DateTime date, float time, string description);
+        public void CreateRecord(Record record);
         public List<Record> GetAllPersonsRecords(DateTime firstDate, DateTime secondDate);
         public List<Record> GetPersonRecords(Person person, DateTime firstDate, DateTime secondDate);
         public List<Person> GetAllPerson();
-        public Person GetPersonByName();
+        public Person GetPersonByName(string name);
                
     }
 }

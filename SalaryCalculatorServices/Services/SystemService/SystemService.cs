@@ -12,31 +12,15 @@ namespace SalaryCalculatorServices.Services.SystemService
     public class SystemService : ISystemService
     {
         ChiefService.ChiefService chiefService = new ChiefService.ChiefService();
-        public Person LogIn()
-        {
+        public Person LogIn(string name)
+        {           
             
-            string name;
-            Person person;
-            List<Person> FileWithPersons = chiefService.GetAllPerson();
+            Person person = chiefService.GetPersonByName(name);
 
-            while (true)
+            if (person == null)
             {
-                string checkName = Console.ReadLine();
-                if (CheckNameValid(checkName) == false)
-                {
-                    Console.WriteLine("Некорректное имя");
-                    continue;                    
-                }
-                person = FileWithPersons.FirstOrDefault(_ => _.FullName == checkName);
-                if (person== null)
-                {
-                    Console.WriteLine("Такого пользователя не существует ");
-                    continue;
-                }
-                break;
+                return null;
             }
-                      
-
             switch (person.Type)
             {
                 case "Chief":
@@ -45,6 +29,7 @@ namespace SalaryCalculatorServices.Services.SystemService
                     return new Employee(person.FullName);
                 case "Freelancer":
                     return new Freelancer(person.FullName);
+
                     default: throw new Exception("Какое-то исключение");
             }
         }
@@ -61,8 +46,7 @@ namespace SalaryCalculatorServices.Services.SystemService
             DateTime dob;
             string input;
             do
-            {
-                Console.WriteLine("Введите дату в формате дд.ММ.гггг (день.месяц.год):");
+            {                
                 input = Console.ReadLine();
             }
             while (!DateTime.TryParseExact(input, "dd.MM.yyyy", null, DateTimeStyles.None, out dob));

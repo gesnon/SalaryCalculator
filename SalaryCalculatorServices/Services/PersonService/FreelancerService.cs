@@ -1,6 +1,7 @@
 ﻿using SalaryCalculator.Models;
 using SalaryCalculatorDB.Models;
 using SalaryCalculatorServices.Services.DataService;
+using SalaryCalculatorServices.Services.Mapers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,36 +12,26 @@ namespace SalaryCalculatorServices.Services.PersonService
 {
     public class FreelancerService : IPersonService
     {
+        private readonly DataService.IDataService<Person> personService;
         private readonly DataService.IDataService<Record> recordService;
-        public FreelancerService(IDataService<Record> recordService)
+        public FreelancerService()
         {
-            this.recordService = recordService;
+            this.personService = new CSVService<Person, PersonMaper>();
+            this.recordService = new CSVService<Record, RecordMaper>();
         }
-
-
-        public void CreateRecord(float Time, string Description, DateTime Date, Person Owner, Person Creator)
+        public void CreateRecord(Record record)
         {
-            if (Owner.FullName != Creator.FullName)
-            {
-                throw new Exception("Время можно добавлять только себе");
-            }
-            if (DateTime.Now.AddDays(-2) > Date)
-            {
-                throw new Exception("Слишком поздно, время добавляется в течении 2 дней");
-            }
-
-            Record record = new Record() { Date = DateTime.Now, Time = 8.0f, Description = "New Description", Creator = Creator, Owner = Owner };
-            //recordService.Add(record);
-        }
-
-        public List<Record> GetPersonRecords(Person person, Person getter)
-        {
-            if (getter.FullName != person.FullName)
-            {
-                throw new Exception("Время можно просматривать только у себя");
-            }
+            Person person = personService.ReadFromFile(@"C:\AllPersonal.csv").FirstOrDefault(_ => _.FullName == record.Creator.FullName);
 
             List<Record> records = new List<Record>();
+            records.Add(record);
+            recordService.AddToFile(@"C:\FreelansersRecords.csv", records);
+        }
+
+        public List<Record> GetPersonRecords(Person person, DateTime firstDate, DateTime secondDate)
+        {
+            List<Record> records = recordService.ReadFromFile(@"C:\FreelansersRecords.csv")
+            .Where(_ => _.Date > firstDate && _.Date < secondDate && _.Owner.FullName == person.FullName).OrderBy(_ => _.Date).ToList();
 
             return records;
         }

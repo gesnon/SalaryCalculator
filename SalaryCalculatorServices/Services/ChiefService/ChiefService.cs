@@ -16,9 +16,9 @@ namespace SalaryCalculatorServices.Services.ChiefService
         public ChiefService()
         {
             this.personService = new CSVService<Person, PersonMaper>();
-            this.recordService = new CSVService<Record, RecordMaper>(); ;
+            this.recordService = new CSVService<Record, RecordMaper>();
         }
-        //FillData dataBase = new FillData();
+
         private readonly DataService.IDataService<Person> personService;
         private readonly DataService.IDataService<Record> recordService;
 
@@ -28,33 +28,58 @@ namespace SalaryCalculatorServices.Services.ChiefService
             this.recordService = recordService;
 
         }
-        public void AddPerson(Person person )
-        {   List<Person> persons = new List<Person>();
-            persons.Add(person);
-            personService.AddToFile(@"C:\AllPersonal.csv", persons );
-        }
-
-        public void CreateRecord(Person person, DateTime date, float time, string description)
+        public void AddPerson(Person person)
         {
-            
-            Record record = new Record() { Date = date, Time = time, Description = description, Owner=person };
-            //recordService.Add(record);
-        }
+            List<Person> persons = new List<Person>();
+            persons.Add(person);
+            personService.AddToFile(@"C:\AllPersonal.csv", persons);
+        }   // Работает
+
+        public void CreateRecord(Record record)
+        {
+            Person person = GetPersonByName(record.Owner.FullName);
+            string path = " ";
+            switch (person.Type)
+            {
+                case "Chief":
+                    path = @"C:\ChiefsRecords.csv";
+                    break;
+                case "Employee":
+                    path = @"C:\EmployeesRecords.csv";
+                    break;
+                case "Freelancer":
+                    path = @"C:\FreelansersRecords.csv";
+                    break;
+            }
+            List<Record> records = new List<Record>();
+            records.Add(record);
+            recordService.AddToFile(path, records);
+        } // Работает
 
         public List<Record> GetAllPersonsRecords(DateTime firstDate, DateTime secondDate)
         {
-            List<Record> records = new List<Record>();
+            List<Record> ChiefsRecords = recordService.ReadFromFile(@"C:\ChiefsRecords.csv")
+                .Where(_ => _.Date > firstDate && _.Date < secondDate).OrderBy(_ => _.Date).ToList();
+            List<Record> EmployeesRecords = recordService.ReadFromFile(@"C:\EmployeesRecords.csv")
+                .Where(_ => _.Date > firstDate && _.Date < secondDate).OrderBy(_ => _.Date).ToList();
+            List<Record> FreelansersRecords = recordService.ReadFromFile(@"C:\FreelansersRecords.csv")
+                .Where(_ => _.Date > firstDate && _.Date < secondDate).OrderBy(_ => _.Date).ToList();
 
-            if (secondDate > DateTime.Now)
+            List<Record> exist = new List<Record>();
+            if (ChiefsRecords != null)
             {
-                secondDate = DateTime.Now;
+                exist.AddRange(ChiefsRecords);
             }
-            if (firstDate > DateTime.Now || firstDate > secondDate)
+            if (EmployeesRecords != null)
             {
-                throw new Exception("Выбрано некорректное начало периода");
+                exist.AddRange(EmployeesRecords);
+            }
+            if (FreelansersRecords != null)
+            {
+                exist.AddRange(FreelansersRecords);
             }
 
-            return records.Where(_ => _.Date > firstDate && _.Date < secondDate).OrderBy(_ => _.Date).ToList();
+            return exist;
         }
 
         public List<Person> GetAllPerson()
@@ -62,40 +87,32 @@ namespace SalaryCalculatorServices.Services.ChiefService
             return personService.ReadFromFile(@"C:\AllPersonal.csv");
         }
 
-        public Person GetPersonByName()
+        public Person GetPersonByName(string name)
         {
-            
-            while (true)
-            {
-                string name = Console.ReadLine();
-                if (name.All(Char.IsLetter) == false)
-                {
-                    Console.WriteLine("Имя должно состоять только из букв");
-                    continue;
-                }
-                Person person = new Person(); /*dataBase.FillPersons().FirstOrDefault(_ => _.FullName == name);*/
-                if (person == null)
-                {
-                    Console.WriteLine("Сотрудник не найден!");
-                    continue;
-                }
-                return person;
-            }           
+            return GetAllPerson().FirstOrDefault(_ => _.FullName == name);
+
         }
         public List<Record> GetPersonRecords(Person person, DateTime firstDate, DateTime secondDate)
         {
             List<Record> records = new List<Record>();
-
-            if (secondDate > DateTime.Now)
+            string path;
+            if (person.Type == "Employee")
             {
-                secondDate = DateTime.Now;
-            }
-            if (firstDate > DateTime.Now || firstDate > secondDate)
+                records = recordService.ReadFromFile(@"C:\EmployeesRecords.csv")
+                    .Where(_ => _.Date > firstDate && _.Date < secondDate).OrderBy(_ => _.Date).ToList();
+            };
+            if (person.Type == "Chief")
             {
-                throw new Exception("Выбрано некорректное начало периода");
-            }
+                records = recordService.ReadFromFile(@"C:\ChiefsRecords.csv")
+                .Where(_ => _.Date > firstDate && _.Date < secondDate).OrderBy(_ => _.Date).ToList();
+            };
+            if (person.Type == "Freelancer")
+            {
+                records = recordService.ReadFromFile(@"C:\FreelansersRecords.csv")
+                    .Where(_ => _.Date > firstDate && _.Date < secondDate).OrderBy(_ => _.Date).ToList();
+            };
 
-            return records.Where(_ => _.Date > firstDate && _.Date < secondDate).OrderBy(_ => _.Date).ToList();
+            return records;
         }
     }
 }

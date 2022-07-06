@@ -9,7 +9,7 @@ namespace SalaryCalculatorServices.Services.SystemService
 {
     public interface ISystemService
     {
-        public Person LogIn();
+        public Person LogIn(string Name);
         public bool CheckNameValid(string Name);
 
         public DateTime CheckDateValid();

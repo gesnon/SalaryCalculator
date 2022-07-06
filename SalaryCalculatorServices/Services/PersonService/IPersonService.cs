@@ -10,8 +10,8 @@ namespace SalaryCalculatorServices.Services.PersonService
 {
     public interface IPersonService
     {
-        public void CreateRecord(float Time, string Description, DateTime Date, Person Owner, Person Creator);
-        public List<Record> GetPersonRecords(Person person, Person getter);
+        public void CreateRecord(Record record);
+        public List<Record> GetPersonRecords(Person person, DateTime firstDate, DateTime secondDate);
                
     }
 }

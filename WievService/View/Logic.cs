@@ -18,9 +18,11 @@ namespace ViewService.View
         {
             PersonView personView = new PersonView();
             SystemService systemService = new SystemService();
-            ChiefView chiefView = new ChiefView();            
+            ChiefView chiefView = new ChiefView();     
+            EmployeeView employeeView = new EmployeeView();  
+            FreelancerView freelancerView = new FreelancerView();
             personView.GetLogInScreen();
-            Person CurrentUser = systemService.LogIn();
+            Person CurrentUser = personView.LogIn();
             personView.GetGreetingsScreen(CurrentUser);
             switch (CurrentUser.Type)
             {
@@ -47,7 +49,7 @@ namespace ViewService.View
                                 chiefView.GetPersonRecords();
                                 break;
                             case 4:
-                                chiefView.AddTime();
+                                chiefView.AddRecord(CurrentUser);
                                 break;
 
                             default:
@@ -55,10 +57,57 @@ namespace ViewService.View
                                 break;
                         }
                     }
-
-
-
                     break;
+
+                case "Employee":
+                    while (true)
+                    {
+                        employeeView.EmployeeFunctions();
+                        int function = Convert.ToInt32(Console.ReadLine());
+                        if (function == 3)
+                        {
+                            break;
+                        }
+                        switch (function)
+                        {
+                            case 1:
+                                employeeView.GetPersonRecords(CurrentUser);
+                                break;
+                            case 2:
+                                employeeView.AddRecord(CurrentUser);
+                                break;
+
+                            default:
+                                Console.WriteLine("Этот функционал Пока не реализован");
+                                break;
+                        }
+                    }
+                    break;
+                case "Freelancer":
+                    while (true)
+                    {
+                        freelancerView.FreelancerFunctions();
+                        int function = Convert.ToInt32(Console.ReadLine());
+                        if (function == 3)
+                        {
+                            break;
+                        }
+                        switch (function)
+                        {
+                            case 1:
+                                freelancerView.GetPersonRecords(CurrentUser);
+                                break;
+                            case 2:
+                                freelancerView.AddRecord(CurrentUser);
+                                break;
+
+                            default:
+                                Console.WriteLine("Этот функционал Пока не реализован");
+                                break;
+                        }
+                    }
+                    break;
+
                 default:
                     Console.WriteLine("Этот функционал Пока не реализован");
                     break;

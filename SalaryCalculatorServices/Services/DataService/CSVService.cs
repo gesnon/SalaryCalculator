@@ -73,7 +73,7 @@ namespace SalaryCalculatorServices.Services.DataService
                 // Don't write the header again.
                 HasHeaderRecord = ReadFromFile(path).Count == 0,
             };
-            using (var stream = File.Open(@"C:\AllPersonal.csv", FileMode.Append))
+            using (var stream = File.Open(path, FileMode.Append))
             using (var writer = new StreamWriter(stream))
             using (var csv = new CsvWriter(writer, config))
             {
