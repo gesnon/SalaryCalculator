@@ -54,16 +54,16 @@ namespace SalaryCalculatorServices.Services.SystemService
             return dob;
         }
 
-        public float CheckTimeValid()
+        public int CheckTimeValid()
         {
-            double time;
+            decimal time;
             string input;
             while (true)
             {                
                 input = Console.ReadLine();
-                if (Double.TryParse(input, out time))
+                if (Decimal.TryParse(input, out time))
                 {                    
-                    return (float)time;
+                    return (int)time;
                 }
                 
                 else { Console.WriteLine("Вы должны ввести число "); }

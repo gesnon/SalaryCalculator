@@ -11,7 +11,7 @@ namespace SalaryCalculatorServices.Services.PersonService
     public interface IPersonService
     {
         public void CreateRecord(Record record);
-        public List<Record> GetPersonRecords(Person person, DateTime firstDate, DateTime secondDate);
+        public List<Record> GetPersonRecords(string name, DateTime firstDate, DateTime secondDate);
                
     }
 }

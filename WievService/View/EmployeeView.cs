@@ -45,7 +45,7 @@ namespace ViewService.View
                 break;
             }
 
-            List<Record> records = employeeService.GetPersonRecords(person, firstDate, secondDate);
+            List<Record> records = employeeService.GetPersonRecords(person.FullName, firstDate, secondDate);
             foreach (Record record in records)
             {
                 Console.WriteLine(record.Date +", " + record.Time + ", " + record.Description);
@@ -57,10 +57,10 @@ namespace ViewService.View
             Console.WriteLine("Введите дату: ");
             DateTime date = systemService.CheckDateValid();
             Console.WriteLine("Введите время: ");
-            float time = systemService.CheckTimeValid();
+            int time = systemService.CheckTimeValid();
             Console.WriteLine("Введите описание: ");
             string description = Console.ReadLine();
-            employeeService.CreateRecord(new Record() { Date = date, Time = time, Owner = creator, Creator = creator, Description = description });
+            employeeService.CreateRecord(new Record() { Date = date, Time = time, Owner = creator.FullName, Creator = creator.FullName, Description = description });
         }
     }
 }

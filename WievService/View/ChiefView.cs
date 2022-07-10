@@ -1,6 +1,7 @@
 ﻿using SalaryCalculator.Models;
 using SalaryCalculatorDB.Models;
 using SalaryCalculatorServices.Services.ChiefService;
+using SalaryCalculatorServices.Services.ReportService;
 using SalaryCalculatorServices.Services.SystemService;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,7 @@ namespace ViewService.View
     {
         ChiefService chiefService = new ChiefService();
         SystemService systemService = new SystemService();
-
+        ReportService reportService = new ReportService();
         public void ChiefFunctions()
         {
             Console.WriteLine("1. Добавить сотрудника");
@@ -113,10 +114,12 @@ namespace ViewService.View
                 break ;
             }
             List<Record> records = chiefService.GetAllPersonsRecords(firstDate, secondDate);
+            Report report = reportService.GetPersonReport(records);
             foreach (Record record in records)
             {
-                Console.WriteLine(record.Date + ", " + record.Owner.FullName + ", " + record.Time + ", " + record.Description);
+                Console.WriteLine(record.Date + ", " + record.Owner + ", " + record.Time + ", " + record.Description);
             }
+            Console.WriteLine("Всего отработано: " + report.workingTime + " часов, заработано: " + report.money + " рублей");
         }
         public void GetPersonRecords()
         {
@@ -164,10 +167,12 @@ namespace ViewService.View
             }
 
             List <Record> records =  chiefService.GetPersonRecords(person,firstDate, secondDate);
+            Report report = reportService.GetPersonReport(records);
             foreach (Record record in records)
             {
-                Console.WriteLine(record.Date + ", ", record.Owner.FullName + ", " + record.Time + ", " + record.Description);
-            }
+                Console.WriteLine(record.Date + ", "+ record.Owner + ", " + record.Time + ", " + record.Description);
+            }           
+            Console.WriteLine("Всего отработано: " + report.workingTime +" часов, заработано: "+ report.money +" рублей" );
         }
 
         public void AddRecord(Person creator)
@@ -196,10 +201,10 @@ namespace ViewService.View
             Console.WriteLine("Введите дату: ");
             DateTime date = systemService.CheckDateValid();
             Console.WriteLine("Введите время: ");
-            float time = systemService.CheckTimeValid();
+            int time = systemService.CheckTimeValid();
             Console.WriteLine("Введите описание: ");
             string description = Console.ReadLine();
-            chiefService.CreateRecord(new Record() { Date = date, Owner = person, Description = description, Time = time, Creator = creator });
+            chiefService.CreateRecord(new Record() { Date = date, Owner = person.FullName, Description = description, Time = time, Creator = creator.FullName });
         }
     }
 }

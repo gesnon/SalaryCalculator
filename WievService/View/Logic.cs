@@ -1,4 +1,5 @@
 ﻿using SalaryCalculator.Models;
+using SalaryCalculatorDB.Models;
 using SalaryCalculatorServices.Services.SystemService;
 using System;
 using System.Collections.Generic;
@@ -21,9 +22,10 @@ namespace ViewService.View
             ChiefView chiefView = new ChiefView();     
             EmployeeView employeeView = new EmployeeView();  
             FreelancerView freelancerView = new FreelancerView();
-            personView.GetLogInScreen();
-            Person CurrentUser = personView.LogIn();
-            personView.GetGreetingsScreen(CurrentUser);
+            //personView.GetLogInScreen();
+            //Person CurrentUser = personView.LogIn();
+            //personView.GetGreetingsScreen(CurrentUser);
+            Chief CurrentUser = new Chief("Иван");
             switch (CurrentUser.Type)
             {
                 case "Chief":                 

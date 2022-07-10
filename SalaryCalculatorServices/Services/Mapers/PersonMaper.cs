@@ -14,7 +14,7 @@ namespace SalaryCalculatorServices.Services.Mapers
         public PersonMaper()
         {
             AutoMap(CultureInfo.InvariantCulture);
-
+            
         }
     }
 }

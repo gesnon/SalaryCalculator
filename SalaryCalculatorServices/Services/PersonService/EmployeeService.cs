@@ -22,17 +22,16 @@ namespace SalaryCalculatorServices.Services.PersonService
 
         public void CreateRecord(Record record)
         {
-            Person person = personService.ReadFromFile(@"C:\AllPersonal.csv").FirstOrDefault(_ => _.FullName == record.Creator.FullName);
-
+            
             List<Record> records = new List<Record>();
             records.Add(record);
             recordService.AddToFile(@"C:\EmployeesRecords.csv", records);
         }
 
-        public List<Record> GetPersonRecords(Person person,DateTime firstDate, DateTime secondDate)
+        public List<Record> GetPersonRecords(string name,DateTime firstDate, DateTime secondDate)
         {
             List<Record> records = recordService.ReadFromFile(@"C:\EmployeesRecords.csv")
-            .Where(_ => _.Date > firstDate && _.Date < secondDate && _.Owner.FullName == person.FullName).OrderBy(_ => _.Date).ToList();
+            .Where(_ => _.Date > firstDate && _.Date < secondDate && _.Owner == name).OrderBy(_ => _.Date).ToList();
 
             return records;
         }

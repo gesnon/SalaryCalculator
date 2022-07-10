@@ -28,13 +28,13 @@ namespace SalaryCalculatorServices.Services.DataService
                     var csvConfig = new CsvConfiguration(CultureInfo.GetCultureInfo("ru-Ru"))
                     {
                         Delimiter = ","
+                        
                     };
                     using (var csv = new CsvReader(writer, csvConfig))
                     {
-                        var record = new Record();
-                        csv.Context.RegisterClassMap<T1>();
-                        var records = csv.GetRecords<T>().ToList();
-
+                        var record = new Record();                        
+                        csv.Context.RegisterClassMap<T1>();                        
+                        var records = csv.GetRecords<T>().ToList();                        
                         return records;
                     }
                 }
@@ -71,13 +71,13 @@ namespace SalaryCalculatorServices.Services.DataService
             var config = new CsvConfiguration(CultureInfo.InvariantCulture)
             {
                 // Don't write the header again.
-                HasHeaderRecord = ReadFromFile(path).Count == 0,
+                HasHeaderRecord = ReadFromFile(path).Count == 0                
             };
             using (var stream = File.Open(path, FileMode.Append))
             using (var writer = new StreamWriter(stream))
             using (var csv = new CsvWriter(writer, config))
             {
-                //csv.WriteHeader<T>();
+                
                 csv.WriteRecords(records);
             }
         }

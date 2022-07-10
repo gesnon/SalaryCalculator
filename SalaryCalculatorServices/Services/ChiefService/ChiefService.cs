@@ -37,7 +37,7 @@ namespace SalaryCalculatorServices.Services.ChiefService
 
         public void CreateRecord(Record record)
         {
-            Person person = GetPersonByName(record.Owner.FullName);
+            Person person = GetPersonByName(record.Owner);
             string path = " ";
             switch (person.Type)
             {
@@ -95,18 +95,18 @@ namespace SalaryCalculatorServices.Services.ChiefService
         public List<Record> GetPersonRecords(Person person, DateTime firstDate, DateTime secondDate)
         {
             List<Record> records = new List<Record>();
-            string path;
-            if (person.Type == "Employee")
+            string type = GetAllPerson().FirstOrDefault(_ => _.FullName == person.FullName).Type;
+            if (type == "Employee")
             {
                 records = recordService.ReadFromFile(@"C:\EmployeesRecords.csv")
                     .Where(_ => _.Date > firstDate && _.Date < secondDate).OrderBy(_ => _.Date).ToList();
             };
-            if (person.Type == "Chief")
+            if (type == "Chief")
             {
                 records = recordService.ReadFromFile(@"C:\ChiefsRecords.csv")
                 .Where(_ => _.Date > firstDate && _.Date < secondDate).OrderBy(_ => _.Date).ToList();
             };
-            if (person.Type == "Freelancer")
+            if (type == "Freelancer")
             {
                 records = recordService.ReadFromFile(@"C:\FreelansersRecords.csv")
                     .Where(_ => _.Date > firstDate && _.Date < secondDate).OrderBy(_ => _.Date).ToList();

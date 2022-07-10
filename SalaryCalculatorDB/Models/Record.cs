@@ -10,17 +10,17 @@ namespace SalaryCalculatorDB.Models
     public class Record
     {   
         public int ID { get; }
-        public float Time { get; set; }
+        public int Time { get; set; }
         public DateTime Date { get; set; }
-        public Person Owner { get; set; }
-        public Person Creator { get; set; }
+        public string Owner { get; set; }
+        public string Creator { get; set; }
         public string? Description { get; set; }
 
         public Record()
         {
 
         }
-        public Record(float Time, DateTime Date, string Description, Person Owner, Person Creator)
+        public Record(int Time, DateTime Date, string Description, string Owner, string Creator)
         {
             this.Time = Time;
             this.Date = Date;
