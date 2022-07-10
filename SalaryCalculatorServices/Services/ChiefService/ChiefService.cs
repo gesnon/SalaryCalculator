@@ -58,28 +58,22 @@ namespace SalaryCalculatorServices.Services.ChiefService
 
         public List<Record> GetAllPersonsRecords(DateTime firstDate, DateTime secondDate)
         {
-            List<Record> ChiefsRecords = recordService.ReadFromFile(@"C:\ChiefsRecords.csv")
-                .Where(_ => _.Date > firstDate && _.Date < secondDate).OrderBy(_ => _.Date).ToList();
-            List<Record> EmployeesRecords = recordService.ReadFromFile(@"C:\EmployeesRecords.csv")
-                .Where(_ => _.Date > firstDate && _.Date < secondDate).OrderBy(_ => _.Date).ToList();
-            List<Record> FreelansersRecords = recordService.ReadFromFile(@"C:\FreelansersRecords.csv")
-                .Where(_ => _.Date > firstDate && _.Date < secondDate).OrderBy(_ => _.Date).ToList();
-
-            List<Record> exist = new List<Record>();
-            if (ChiefsRecords != null)
+            var pathsToCheck = new string[]
+                { @"C:\ChiefsRecords.csv", @"C:\EmployeesRecords.csv", @"C:\FreelansersRecords.csv" };
+            List<Record> records = new List<Record>();
+            foreach (var path in pathsToCheck)
             {
-                exist.AddRange(ChiefsRecords);
-            }
-            if (EmployeesRecords != null)
-            {
-                exist.AddRange(EmployeesRecords);
-            }
-            if (FreelansersRecords != null)
-            {
-                exist.AddRange(FreelansersRecords);
+                records.AddRange(GetPersonsRecords(firstDate, secondDate, path));
             }
 
-            return exist;
+            return records;
+        }
+
+        private List<Record> GetPersonsRecords(DateTime firstDate, DateTime secondDate, string path)
+        {
+            List<Record> ChiefsRecords = recordService.ReadFromFile(path)
+                .Where(_=>_.Date > firstDate &&_.Date < secondDate).OrderBy(_=>_.Date).ToList();
+            return ChiefsRecords;
         }
 
         public List<Person> GetAllPerson()
@@ -96,22 +90,19 @@ namespace SalaryCalculatorServices.Services.ChiefService
         {
             List<Record> records = new List<Record>();
             string type = GetAllPerson().FirstOrDefault(_ => _.FullName == person.FullName).Type;
-            if (type == "Employee")
-            {
-                records = recordService.ReadFromFile(@"C:\EmployeesRecords.csv")
-                    .Where(_ => _.Date > firstDate && _.Date < secondDate).OrderBy(_ => _.Date).ToList();
-            };
+            string path= @"C:\EmployeesRecords.csv";
+            
             if (type == "Chief")
             {
-                records = recordService.ReadFromFile(@"C:\ChiefsRecords.csv")
-                .Where(_ => _.Date > firstDate && _.Date < secondDate).OrderBy(_ => _.Date).ToList();
-            };
-            if (type == "Freelancer")
-            {
-                records = recordService.ReadFromFile(@"C:\FreelansersRecords.csv")
-                    .Where(_ => _.Date > firstDate && _.Date < secondDate).OrderBy(_ => _.Date).ToList();
+                path = @"C:\ChiefsRecords.csv";
             };
 
+            if (type == "Freelancer")
+            {
+                path = @"C:\FreelansersRecords.csv";
+            };
+            records = recordService.ReadFromFile(path)
+                    .Where(_ => _.Date > firstDate && _.Date < secondDate).OrderBy(_ => _.Date).ToList();
             return records;
         }
     }

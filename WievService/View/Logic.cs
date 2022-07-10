@@ -22,10 +22,10 @@ namespace ViewService.View
             ChiefView chiefView = new ChiefView();     
             EmployeeView employeeView = new EmployeeView();  
             FreelancerView freelancerView = new FreelancerView();
-            //personView.GetLogInScreen();
-            //Person CurrentUser = personView.LogIn();
-            //personView.GetGreetingsScreen(CurrentUser);
-            Chief CurrentUser = new Chief("Иван");
+            personView.GetLogInScreen();
+            Person CurrentUser = personView.LogIn();
+            personView.GetGreetingsScreen(CurrentUser);
+            //Chief CurrentUser = new Chief("Иван");
             switch (CurrentUser.Type)
             {
                 case "Chief":                 
@@ -64,7 +64,7 @@ namespace ViewService.View
                 case "Employee":
                     while (true)
                     {
-                        employeeView.EmployeeFunctions();
+                        employeeView.PersonFunctions();
                         int function = Convert.ToInt32(Console.ReadLine());
                         if (function == 3)
                         {
@@ -88,7 +88,7 @@ namespace ViewService.View
                 case "Freelancer":
                     while (true)
                     {
-                        freelancerView.FreelancerFunctions();
+                        freelancerView.PersonFunctions();
                         int function = Convert.ToInt32(Console.ReadLine());
                         if (function == 3)
                         {

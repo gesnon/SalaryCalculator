@@ -9,7 +9,7 @@ namespace SalaryCalculatorDB.Models
 {
     public class Record
     {   
-        public int ID { get; }
+        public int ID { get; } // не используется
         public int Time { get; set; }
         public DateTime Date { get; set; }
         public string Owner { get; set; }

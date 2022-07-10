@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SalaryCalculatorServices.Services.Mapers;
+using CsvHelper.TypeConversion;
 
 namespace SalaryCalculatorServices.Services.DataService
 {
@@ -27,11 +28,14 @@ namespace SalaryCalculatorServices.Services.DataService
                 {
                     var csvConfig = new CsvConfiguration(CultureInfo.GetCultureInfo("ru-Ru"))
                     {
-                        Delimiter = ","
+                        Delimiter = ",",                        
                         
                     };
+
                     using (var csv = new CsvReader(writer, csvConfig))
                     {
+                        var options = new TypeConverterOptions { Formats = new[] { "dd/MM/yyyy hh:mm:ss" } };
+                        csv.Context.TypeConverterOptionsCache.AddOptions<DateTime>(options);
                         var record = new Record();                        
                         csv.Context.RegisterClassMap<T1>();                        
                         var records = csv.GetRecords<T>().ToList();                        
@@ -59,6 +63,8 @@ namespace SalaryCalculatorServices.Services.DataService
                 };
                 using (var csv = new CsvWriter(writer, csvConfig))
                 {
+                    var options = new TypeConverterOptions { Formats = new[] { "dd/MM/yyyy hh:mm:ss" } };
+                    csv.Context.TypeConverterOptionsCache.AddOptions<DateTime>(options);
                     csv.WriteHeader<T>();
                     csv.WriteRecords(list);
                 }
@@ -77,7 +83,8 @@ namespace SalaryCalculatorServices.Services.DataService
             using (var writer = new StreamWriter(stream))
             using (var csv = new CsvWriter(writer, config))
             {
-                
+                var options = new TypeConverterOptions { Formats = new[] { "dd/MM/yyyy hh:mm:ss" } };
+                csv.Context.TypeConverterOptionsCache.AddOptions<DateTime>(options);
                 csv.WriteRecords(records);
             }
         }

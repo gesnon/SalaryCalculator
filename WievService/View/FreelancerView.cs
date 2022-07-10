@@ -10,46 +10,10 @@ using System.Threading.Tasks;
 
 namespace ViewService.View
 {
-    public class FreelancerView
+    public class FreelancerView: PersonView
     {
-        FreelancerService freelancerService = new FreelancerService();
+        PersonService personService = new PersonService();
         SystemService systemService = new SystemService();
-        public void FreelancerFunctions()
-        {
-            Console.WriteLine("1. Просмотреть отчет за период");
-            Console.WriteLine("2. Добавить часы работы");
-            Console.WriteLine("3. Выход из программы");
-        }
-        public void GetPersonRecords(Person person)
-        {
-            DateTime firstDate;
-            DateTime secondDate;
-
-            while (true)
-            {
-                Console.WriteLine("Введите налало и конец периода в формате дд.ММ.гггг (день.месяц.год):");
-                Console.WriteLine("Начало периода: ");
-                firstDate = systemService.CheckDateValid();
-                Console.WriteLine("Окончание периода: ");
-                secondDate = systemService.CheckDateValid();
-                if (secondDate > DateTime.Now)
-                {
-                    secondDate = DateTime.Now;
-                }
-                if (firstDate > secondDate)
-                {
-                    Console.WriteLine("Некорректный период");
-                    continue;
-                }
-                break;
-            }
-
-            List<Record> records = freelancerService.GetPersonRecords(person.FullName, firstDate, secondDate);
-            foreach (Record record in records)
-            {
-                Console.WriteLine(record.Date + ", " + record.Time + ", " + record.Description);
-            }
-        }
 
         public void AddRecord(Person creator)
         {
@@ -65,13 +29,12 @@ namespace ViewService.View
                 }
                 break;
             }
-
             
             Console.WriteLine("Введите время: ");
             int time = systemService.CheckTimeValid();
             Console.WriteLine("Введите описание: ");
             string description = Console.ReadLine();
-            freelancerService.CreateRecord(new Record() { Date = date, Time = time, Owner = creator.FullName, Creator = creator.FullName, Description = description });
+            personService.CreateRecord(new Record() { Date = date, Time = time, Owner = creator.FullName, Creator = creator.FullName, Description = description });
         }
     }
 }

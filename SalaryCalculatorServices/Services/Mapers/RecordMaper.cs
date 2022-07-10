@@ -15,6 +15,10 @@ namespace SalaryCalculatorServices.Services.Mapers
         {
             AutoMap(CultureInfo.InvariantCulture);
             
+            //string format = "dd/MM/yyyy hh:mm:ss";
+
+            //Map(m => m.Date).TypeConverterOption.Format(format);
+              
         }
     }
 }

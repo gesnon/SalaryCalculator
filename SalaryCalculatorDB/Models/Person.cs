@@ -11,8 +11,8 @@ namespace SalaryCalculator.Models
     {
         public string FullName { get; set; }        
         public string Type { get; set; }
-        public decimal Salary { get; set; }
-        public decimal Bonus { get; set; }
-        public List<Record> TimeRecords { get; set; } = new List<Record>(); //Возможно лучше просто хранить ID записей
+        public decimal Salary { get; set; } // не используется
+        public decimal Bonus { get; set; } // не используется
+        public List<Record> TimeRecords { get; set; } = new List<Record>(); // не используется
     }
 }
