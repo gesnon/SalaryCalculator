@@ -34,12 +34,9 @@ namespace SalaryCalculatorServices.Services.SystemService
             }
         }
         public bool CheckNameValid(string Name)
-        {
-            if (Name.All(Char.IsLetter) == false)
-            {                
-                return false;
-            }            
-            return true;
+        {                
+            return Name.All(c => char.IsLetter(c) || c == ' '||c=='-');
+            
         }
         public DateTime CheckDateValid()
         {
@@ -68,10 +65,23 @@ namespace SalaryCalculatorServices.Services.SystemService
                 
                 else { Console.WriteLine("Вы должны ввести число "); }
                 continue;
+            }            
+
+        }
+
+        public string getPath(string name)
+        {
+            string path = @"C:\ChiefsRecords.csv";
+            string type = chiefService.GetPersonByName(name).Type;
+            if (type == "Employee")
+            {
+                path = @"C:\EmployeesRecords.csv";
             }
-
-            
-
+            if (type == "Freelancer")
+            {
+                path = @"C:\FreelansersRecords.csv";
+            }
+            return path;
         }
     }
 }

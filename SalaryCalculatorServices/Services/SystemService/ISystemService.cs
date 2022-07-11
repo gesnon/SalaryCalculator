@@ -11,7 +11,7 @@ namespace SalaryCalculatorServices.Services.SystemService
     {
         public Person LogIn(string Name);
         public bool CheckNameValid(string Name);
-
         public DateTime CheckDateValid();
+        public string getPath(string name);
     }
 }

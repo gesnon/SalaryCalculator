@@ -13,11 +13,7 @@ namespace SalaryCalculatorServices.Services.Mapers
     {
         public RecordMaper()
         {
-            AutoMap(CultureInfo.InvariantCulture);
-            
-            //string format = "dd/MM/yyyy hh:mm:ss";
-
-            //Map(m => m.Date).TypeConverterOption.Format(format);
+            AutoMap(CultureInfo.InvariantCulture);            
               
         }
     }

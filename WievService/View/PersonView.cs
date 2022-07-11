@@ -85,7 +85,7 @@ namespace ViewService.View
                 break;
             }
 
-            List<Record> records = personService.GetPersonRecords(person.FullName, firstDate, secondDate);
+            List<Record> records = personService.GetPersonRecords(person, firstDate, secondDate);
 
 
             foreach (Record record in records)

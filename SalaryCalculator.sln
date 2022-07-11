@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SalaryCalculatorDB", "Salar
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SalaryCalculatorServices", "SalaryCalculatorServices\SalaryCalculatorServices.csproj", "{923BA5A0-7ACB-403F-8F60-841891861152}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViewService", "WievService\ViewService.csproj", "{03A30D3E-DFD9-4A52-87DF-A5803378240C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ViewService", "WievService\ViewService.csproj", "{03A30D3E-DFD9-4A52-87DF-A5803378240C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SalaryCalculatorServicesTests", "SalaryCalculatorServicesTests\SalaryCalculatorServicesTests.csproj", "{580A3A9C-5707-4A78-AB8B-6F4489CB0879}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{03A30D3E-DFD9-4A52-87DF-A5803378240C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{03A30D3E-DFD9-4A52-87DF-A5803378240C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{03A30D3E-DFD9-4A52-87DF-A5803378240C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{580A3A9C-5707-4A78-AB8B-6F4489CB0879}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{580A3A9C-5707-4A78-AB8B-6F4489CB0879}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{580A3A9C-5707-4A78-AB8B-6F4489CB0879}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{580A3A9C-5707-4A78-AB8B-6F4489CB0879}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

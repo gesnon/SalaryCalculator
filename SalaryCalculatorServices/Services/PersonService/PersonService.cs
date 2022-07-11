@@ -10,48 +10,44 @@ using System.Threading.Tasks;
 
 namespace SalaryCalculatorServices.Services.PersonService
 {
-    public class PersonService: IPersonService
+    public class PersonService : IPersonService
     {
         private readonly DataService.IDataService<Record> recordService;
         private readonly DataService.IDataService<Person> personService;
+        private readonly SystemService.ISystemService systemService;
         public PersonService()
         {
             this.personService = new CSVService<Person, PersonMaper>();
             this.recordService = new CSVService<Record, RecordMaper>();
 
         }
-        public void CreateRecord(Record record)
+        public List<Person> GetAllPerson()
         {
-            string type = personService.ReadFromFile(@"C:\AllPersonal.csv").FirstOrDefault(_ => _.FullName == record.Owner).Type;
-            List<Record> records = new List<Record>();
-            records.Add(record);
-            if (type == "Employee")
-            {
-                recordService.AddToFile(@"C:\EmployeesRecords.csv", records);
-            }
-            if (type == "Freelancer")
-            {
-                recordService.AddToFile(@"C:\FreelansersRecords.csv", records);
-            }
+            return personService.ReadFromFile(@"C:\AllPersonal.csv");
         }
 
-        public List<Record> GetPersonRecords(string name, DateTime firstDate, DateTime secondDate)
+        public Person GetPersonByName(string name)
         {
-            string type = personService.ReadFromFile(@"C:\AllPersonal.csv").FirstOrDefault(_ => _.FullName == name).Type;
+            return GetAllPerson().FirstOrDefault(_ => _.FullName == name);
 
+        }
+        public void CreateRecord(Record record)
+        {
+            Person person = GetPersonByName(record.Owner);
+            string path = systemService.getPath(person.FullName);
             List<Record> records = new List<Record>();
+            records.Add(record);
+            recordService.AddToFile(path, records);
+        }
 
-
-            if (type == "Employee")
-            {
-                records = recordService.ReadFromFile(@"C:\EmployeesRecords.csv")
+        public List<Record> GetPersonRecords(Person person, DateTime firstDate, DateTime secondDate)
+        {
+            List<Record> records = new List<Record>();
+            string name = person.FullName;
+            string path = systemService.getPath(name);
+            
+            records = recordService.ReadFromFile(path)
             .Where(_ => _.Date > firstDate && _.Date < secondDate && _.Owner == name).OrderBy(_ => _.Date).ToList();
-            }
-            if (type == "Freelancer")
-            {
-                records = recordService.ReadFromFile(@"C:\FreelansersRecords.csv")
-            .Where(_ => _.Date > firstDate && _.Date < secondDate && _.Owner == name).OrderBy(_ => _.Date).ToList();
-            }
             return records;
         }
     }
